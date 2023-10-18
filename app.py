@@ -238,5 +238,33 @@ def return_materias():
         data.append(materias)
 
     return jsonify(data)
+
+
+@app.route('/render_test', methods=['GET'])
+def return_aluno():
+
+    email = "janedoe@gmail.com"
+
+    # Inicialização do cursor
+    mycursor = db.cursor()
+    # Comando e valores para consultar o banco de dados
+    sql_command_for_database = "SELECT * FROM aluno WHERE Email = %s;"
+    values_for_database = (email,)
+
+    # Tenta executar o camando no banco de dados para fazer a consulta
+    try:
+        mycursor.execute(sql_command_for_database, values_for_database)
+    except:
+        return jsonify({'return_aluno': 'error'})
+
+    aluno_data = mycursor.fetchone()
+
+    # parâmetros separados pra retornar para o backend
+    aluno_RA = aluno_data[0]
+    aluno_nome = aluno_data[1]
+    aluno_email = aluno_data[2]
+
+    return jsonify({'aluno_RA': aluno_RA, 'aluno_nome': aluno_nome, 'aluno_email': aluno_email})
+
 if __name__ == '__main__':
     app.run()
