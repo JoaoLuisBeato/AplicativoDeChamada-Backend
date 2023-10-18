@@ -241,7 +241,7 @@ def return_materias():
 
 
 @app.route('/render_test', methods=['GET'])
-def return_aluno():
+def render_test():
 
     email = "janedoe@gmail.com"
 
